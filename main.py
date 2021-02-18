@@ -58,8 +58,9 @@ def concat_vertically(img1, img2):
     return new
 
 def main(size, outfile):
-    n_tiles = sum([1 for n in range(0,size,TILE_WIDTH)]) # amount of tiles per row and column
-    Canvas([Row([Tile() for n in range(n_tiles)]) for n in range(n_tiles)]).img.save(f"{outfile}.png")
+    n_tiles = size // TILE_WIDTH # amount of tiles per row and column
+    pic = Canvas([Row([Tile() for n in range(n_tiles)]) for n in range(n_tiles)])
+    pic.img.save(f"{outfile}.png")
 
 if __name__ == "__main__":
     size = 2000
