@@ -1,9 +1,10 @@
 from PIL import Image
 import random
+import sys
 from pathlib import Path
 
-TILE_WIDTH = 60
-TILE_PATH = 'tiles'
+TILE_WIDTH = 200
+TILE_PATH = sys.argv[1]
 
 # A canvas consists of multiple rows
 # A Row consist of multiple tiles
@@ -16,6 +17,10 @@ class Tile:
                 [x.absolute() for x in Path(f"{TILE_PATH}").glob("*.png")]
             )
         ).rotate(random.choice([0,90,180, 270]))
+        if random.random() > 0.5:
+            self.img = self.img.transpose(Image.FLIP_LEFT_RIGHT)
+        if random.random() > 0.5:
+            self.img = self.img.transpose(Image.FLIP_TOP_BOTTOM)
 
 class Row:
     def __init__(self, tiles):
@@ -57,7 +62,7 @@ def main(size, outfile):
     Canvas([Row([Tile() for n in range(n_tiles)]) for n in range(n_tiles)]).img.save(f"{outfile}.png")
 
 if __name__ == "__main__":
-    size = 800
+    size = 2000
     outfile = "test"
     main(size, outfile)
     
